@@ -14,6 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// swagger setup
+const { swaggerUi, specs } = require('./config/swagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.get("/", (req, res) => {
     res.send("Event API Running");
 });
