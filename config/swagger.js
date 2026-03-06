@@ -1,22 +1,35 @@
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Event Management API',
-      version: '1.0.0',
-      description: 'API documentation for the Event Management backend',
+      title: "Event Management API",
+      version: "1.0.0",
+      description: "API documentation for Event Management System",
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: "http://localhost:3000",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT"
+        }
+      }
+    }
   },
-  apis: ['./routes/*.js'], // files containing annotations
+  apis: ["./routes/*.js"], // swagger will read route comments
 };
 
 const specs = swaggerJsdoc(options);
 
-module.exports = { swaggerUi: require('swagger-ui-express'), specs };
+module.exports = {
+  swaggerUi,
+  specs
+};
