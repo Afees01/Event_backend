@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 
-// admin login
 /**
  * @swagger
  * tags:
@@ -10,32 +9,6 @@ const authController = require('../controllers/authController');
  *   description: Authentication endpoints
  */
 
-/**
- * @swagger
- * /api/auth/admin/login:
- *   post:
- *     summary: Admin login
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: JWT token
- *       401:
- *         description: Invalid credentials
- */
-router.post('/admin/login', authController.adminLogin);
-
-// user signup/login
 /**
  * @swagger
  * /api/auth/signup:
@@ -55,6 +28,10 @@ router.post('/admin/login', authController.adminLogin);
  *                 type: string
  *               password:
  *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [user, admin]
+ *                 default: user
  *     responses:
  *       201:
  *         description: User created
@@ -62,6 +39,7 @@ router.post('/admin/login', authController.adminLogin);
  *         description: Validation error
  */
 router.post('/signup', authController.userSignup);
+
 /**
  * @swagger
  * /api/auth/login:
