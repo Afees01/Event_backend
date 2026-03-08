@@ -59,7 +59,11 @@ router.get('/:id', eventController.getEventById);
 // admin-only
 /**
  * @swagger
+<<<<<<< HEAD
  * /api/events/create:
+=======
+ * /api/events:
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
  *   post:
  *     summary: Create an event
  *     tags: [Events]
@@ -68,7 +72,11 @@ router.get('/:id', eventController.getEventById);
  *     requestBody:
  *       required: true
  *       content:
+<<<<<<< HEAD
  *         multipart/form-data:
+=======
+ *         application/json:
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
  *           schema:
  *             type: object
  *             properties:
@@ -81,15 +89,23 @@ router.get('/:id', eventController.getEventById);
  *                 type: string
  *               description:
  *                 type: string
+<<<<<<< HEAD
  *               image:
  *                 type: string
  *                 format: binary
+=======
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
  *     responses:
  *       201:
  *         description: Event created
  */
+<<<<<<< HEAD
 //router.post('/', authenticate, requireAdmin, upload.single('image'), eventController.createEvent);
 router.post('/create', authenticate, requireAdmin, upload.single('image'), eventController.createEvent);
+=======
+router.post('/', authenticate, requireAdmin, eventController.createEvent);
+
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
 /**
  * @swagger
  * /api/events/{id}/update:
@@ -107,7 +123,11 @@ router.post('/create', authenticate, requireAdmin, upload.single('image'), event
  *     requestBody:
  *       required: true
  *       content:
+<<<<<<< HEAD
  *         multipart/form-data:
+=======
+ *         application/json:
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
  *           schema:
  *             type: object
  *             properties:
@@ -120,16 +140,23 @@ router.post('/create', authenticate, requireAdmin, upload.single('image'), event
  *                 type: string
  *               description:
  *                 type: string
+<<<<<<< HEAD
  *               image:
  *                 type: string
  *                 format: binary
+=======
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
  *     responses:
  *       200:
  *         description: Event updated
  *       404:
  *         description: Not found
  */
+<<<<<<< HEAD
 router.post('/:id/update', authenticate, requireAdmin, upload.single('image'), eventController.updateEvent);
+=======
+router.post('/:id/update', authenticate, requireAdmin, eventController.updateEvent);
+>>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
 
 /**
  * @swagger
