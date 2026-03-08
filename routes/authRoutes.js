@@ -57,11 +57,17 @@ router.post('/signup', authController.userSignup);
  *                 type: string
  *               password:
  *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [user, admin]
+ *                 description: Optional - validates user has this role
  *     responses:
  *       200:
  *         description: JWT token
  *       401:
  *         description: Invalid credentials
+ *       403:
+ *         description: User role does not match requested role
  */
 router.post('/login', authController.userLogin);
 

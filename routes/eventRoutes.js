@@ -2,6 +2,19 @@ const express = require('express');
 const router = express.Router();
 const eventController = require('../controllers/eventController');
 const { authenticate, requireAdmin } = require('../middleware/authMiddleware');
+const multer = require('multer');
+const crypto = require('crypto');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => {
+    const uniqueName = crypto.randomBytes(16).toString('hex');
+    const ext = path.extname(file.originalname);
+    cb(null, uniqueName + ext);
+  }
+});
+const upload = multer({ storage });
 
 // public
 /**
@@ -46,7 +59,7 @@ router.get('/:id', eventController.getEventById);
 // admin-only
 /**
  * @swagger
- * /api/events:
+ * /api/events/create:
  *   post:
  *     summary: Create an event
  *     tags: [Events]
@@ -55,7 +68,7 @@ router.get('/:id', eventController.getEventById);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -68,12 +81,15 @@ router.get('/:id', eventController.getEventById);
  *                 type: string
  *               description:
  *                 type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
  *         description: Event created
  */
-router.post('/', authenticate, requireAdmin, eventController.createEvent);
-
+//router.post('/', authenticate, requireAdmin, upload.single('image'), eventController.createEvent);
+router.post('/create', authenticate, requireAdmin, upload.single('image'), eventController.createEvent);
 /**
  * @swagger
  * /api/events/{id}/update:
@@ -91,7 +107,7 @@ router.post('/', authenticate, requireAdmin, eventController.createEvent);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -104,13 +120,16 @@ router.post('/', authenticate, requireAdmin, eventController.createEvent);
  *                 type: string
  *               description:
  *                 type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: Event updated
  *       404:
  *         description: Not found
  */
-router.post('/:id/update', authenticate, requireAdmin, eventController.updateEvent);
+router.post('/:id/update', authenticate, requireAdmin, upload.single('image'), eventController.updateEvent);
 
 /**
  * @swagger
