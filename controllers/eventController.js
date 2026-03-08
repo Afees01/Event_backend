@@ -29,19 +29,14 @@ exports.createEvent = async (req, res) => {
   const image = req.file ? req.file.path : null;
 
   if (!title || !date || !location) {
-<<<<<<< HEAD
     return res.status(400).json({
       success: false,
       message: "Title, date, and location are required"
     });
-=======
-    return res.status(400).json({ success: false, message: "Title, date, and location are required" });
->>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
   }
 
   try {
     const [result] = await pool.query(
-<<<<<<< HEAD
       'INSERT INTO EVENTS (title, DATE, location, DESCRIPTION, image) VALUES (?, ?, ?, ?, ?)',
       [title, date, location, description || '', image]
     );
@@ -59,12 +54,6 @@ exports.createEvent = async (req, res) => {
       }
     });
 
-=======
-      'INSERT INTO EVENTS (title, DATE, location, DESCRIPTION) VALUES (?, ?, ?, ?)',
-      [title, date, location, description || '']
-    );
-    res.status(201).json({ success: true, message: "Event created successfully", data: { id: result.insertId, title, date, location, description } });
->>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -77,7 +66,6 @@ exports.updateEvent = async (req, res) => {
   const image = req.file ? req.file.path : null;
 
   try {
-<<<<<<< HEAD
     // build query dynamically if image present
     let query = 'UPDATE EVENTS SET title = ?, DATE = ?, location = ?, DESCRIPTION = ?';
     const params = [title, date, location, description];
@@ -95,16 +83,7 @@ exports.updateEvent = async (req, res) => {
     const data = { id, title, date, location, description };
     if (image) data.image = image;
     res.json({ success: true, message: "Event updated successfully", data });
-=======
-    const [result] = await pool.query(
-      'UPDATE EVENTS SET title = ?, DATE = ?, location = ?, DESCRIPTION = ? WHERE id = ? AND is_deleted = 0',
-      [title, date, location, description, id]
-    );
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ success: false, message: "Event not found" });
-    }
-    res.json({ success: true, message: "Event updated successfully", data: { id, title, date, location, description } });
->>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error" });

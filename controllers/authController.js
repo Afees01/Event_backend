@@ -74,7 +74,6 @@ exports.userLogin = async (req, res) => {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-<<<<<<< HEAD
     // If role parameter is provided, validate it matches user's role
     if (role && user.ROLE !== role) {
       return res.status(403).json({ success: false, message: `User is registered as ${user.ROLE}, not ${role}` });
@@ -82,10 +81,7 @@ exports.userLogin = async (req, res) => {
 
     const token = generateToken({ role: user.ROLE, id: user.id, email });
     res.json({ success: true, message: "Login successful", data: { token, role: user.ROLE } });
-=======
-    const token = generateToken({ role: user.ROLE, id: user.id, email });
-    res.json({ success: true, message: "Login successful", data: { token } });
->>>>>>> 546609132fd46052f973a3704fe9a41bab3f2c78
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
